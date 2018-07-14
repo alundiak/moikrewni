@@ -1,5 +1,5 @@
 function Recovery() {
-    var defaultSurnameMapUrl = 'http://s3.amazonaws.com/12XN8SEM7ZEYVXRQQ702-maps-pl/kowalski_kompletny.png';
+    var defaultSurnameMapUrl = 'https://s3.amazonaws.com/12XN8SEM7ZEYVXRQQ702-maps-pl/kowalski_kompletny.png';
     const PL_chars = ['ś', 'ń', 'ó', 'ł', 'ę', 'ź', 'ż', 'ć', 'ą'];
     const PL_chars_map = {
         'ś': '%25C5%259B',
