@@ -1,6 +1,7 @@
 function Recovery() {
     var defaultSurnameMapUrl = 'http://s3.amazonaws.com/12XN8SEM7ZEYVXRQQ702-maps-pl/kowalski_kompletny.png';
-    const PL = {
+    const PL_chars = ['ś', 'ń', 'ó', 'ł', 'ę', 'ź', 'ż', 'ć', 'ą'];
+    const PL_chars_map = {
         'ś': '%25C5%259B',
         'ń': '%25C5%2584',
         'ó': '%25C3%25B3',
@@ -12,39 +13,47 @@ function Recovery() {
         'ą': '%25C4%2585'
     };
 
+    const surnameInput = document.querySelector('.surname');
+    const findSurnameButton = document.querySelector('.findSurname');
     const surnameMapImg = document.querySelector('.surnameMap');
 
     this.init = function() {
-        // tbd
         this.setupEventListeners();
-        // surnameMapImg.src = defaultSurnameMapUrl;
+        // surnameMapImg.src = defaultSurnameMapUrl; // alternative to HTML approach
     }
 
     this.setupEventListeners = function() {
-        let surnameEl = document.querySelector('.surname');
-        // surnameEl.addEventListener('change', (e) => {
-        //     console.log(e);
-        // });
-
-        let findSurnameEl = document.querySelector('.findSurname');
         var eventHandler = () => {
-            console.log(surnameEl.value);
-            // this.sendRequest(surname.value);
-            this.updateImg(surnameEl.value);
+            this.sendRequest(surnameInput.value);
+            this.updateImg(surnameInput.value);
         };
 
-        findSurnameEl.addEventListener('click', eventHandler);
-        surnameEl.addEventListener('keyup', (e) => {
+        findSurnameButton.addEventListener('click', eventHandler);
+        surnameInput.addEventListener('keyup', (e) => {
+        	if (!e.target.value){
+        		findSurnameButton.setAttribute('disabled', 'disabled');	
+        	} else {
+        		findSurnameButton.removeAttribute('disabled');	
+        	}
+        	
             e.which = e.which || e.keyCode;
-            if (e.which == 13) {
+            if (e.which == 13) { // if Enter pressed
                 eventHandler();
             }
         });
     }
 
     this.parseSurnameValue = function(surnameValue) {
-        var finalSurnameValue = surnameValue;
-        // TBD, PL
+        // Alternative, if needed
+        // for (let char of PL_chars){
+        // 	if (surnameValue.indexOf(char) > -1) {
+        // 		surnameValue = surnameValue.replace(char, PL_chars_map[char]);
+        // 	}
+        // }
+        // var finalSurnameValue = surnameValue;
+
+        var finalSurnameValue = escape(encodeURI(surnameValue));;
+        console.log(finalSurnameValue);
         return finalSurnameValue;
     }
 
@@ -61,7 +70,7 @@ function Recovery() {
         const surname = this.parseSurnameValue(surnameValueFromInput);
 
         const surnameValue = document.querySelector('.surnameValue');
-        surnameValue.innerText = surname;
+        surnameValue.innerText = surnameValueFromInput;
 
         const url = defaultSurnameMapUrl.replace(/kowalski/, surname);
 

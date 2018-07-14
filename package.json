@@ -1,7 +1,7 @@
 {
-  "name": "moikrewni-recovery",
+  "name": "moikrewni",
   "version": "1.0.0",
-  "description": "",
+  "description": "Alternative Search of Moikrewni.PL images (built, using access to Amazon images, which might be offline soon)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
