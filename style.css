@@ -1,13 +1,30 @@
 header {
-	position: absolute;
-	right: 50px;
-	top: 35px;
-}
-.imgContainer,
-.infoContainer {
-    display: inline-block;
+    position: absolute;
+    right: 50px;
+    top: 35px;
 }
 
-.infoContainer {
+.surname {
+    width: 20%;
+}
+
+img {
+    width: 40%;
+    height: auto;
+}
+
+.info-container {
     vertical-align: top;
+    display: inline-block;
+    width: 40%;
+}
+
+.surnameValue,
+.surnameMapUrlValue {
+    vertical-align: top;
+}
+
+.surnameMapUrlValue {
+    word-wrap: break-word;
+    word-break: break-all;
 }

@@ -1,5 +1,8 @@
-function Recovery() {
+function MoiKrewniRecovery() {
+    var amazonUrl = 'https://s3.amazonaws.com/12XN8SEM7ZEYVXRQQ702-maps-pl/'; // return XML
     var defaultSurnameMapUrl = 'https://s3.amazonaws.com/12XN8SEM7ZEYVXRQQ702-maps-pl/kowalski_kompletny.png';
+
+    // Alternative code. Not really needed right now.
     const PL_chars = ['ś', 'ń', 'ó', 'ł', 'ę', 'ź', 'ż', 'ć', 'ą'];
     const PL_chars_map = {
         'ś': '%25C5%259B',
@@ -12,30 +15,42 @@ function Recovery() {
         'ć': '%25C4%2587',
         'ą': '%25C4%2585'
     };
+    // Alternative code. Not really needed right now.
 
     const surnameInput = document.querySelector('.surname');
     const findSurnameButton = document.querySelector('.findSurname');
     const surnameMapImg = document.querySelector('.surnameMap');
 
     this.init = function() {
+        // this.getAllMapsPl(); // fetch URL, which returns XML data about all available images
         this.setupEventListeners();
         // surnameMapImg.src = defaultSurnameMapUrl; // alternative to HTML approach
     }
 
+    this.getAllMapsPl = function() {
+        fetch(amazonUrl)
+            .then(function(response) {
+                console.log(response.xml());
+            })
+            .then(function(myXml) {
+                console.log(myXml);
+            });
+    }
+
     this.setupEventListeners = function() {
         var eventHandler = () => {
-            // this.sendRequest(surnameInput.value);
+        // this.sendRequest(surnameInput.value); // Causes CORS, from localhost
             this.updateImg(surnameInput.value);
         };
 
         findSurnameButton.addEventListener('click', eventHandler);
         surnameInput.addEventListener('keyup', (e) => {
-        	if (!e.target.value){
-        		findSurnameButton.setAttribute('disabled', 'disabled');	
-        	} else {
-        		findSurnameButton.removeAttribute('disabled');	
-        	}
-        	
+            if (!e.target.value) {
+                findSurnameButton.setAttribute('disabled', 'disabled');
+            } else {
+                findSurnameButton.removeAttribute('disabled');
+            }
+
             e.which = e.which || e.keyCode;
             if (e.which == 13) { // if Enter pressed
                 eventHandler();
@@ -80,5 +95,5 @@ function Recovery() {
     }
 }
 
-var recovery = new Recovery();
-recovery.init();
+var moikrewni = new MoiKrewniRecovery();
+moikrewni.init();
