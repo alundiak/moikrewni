@@ -22,24 +22,31 @@ function MoiKrewniRecovery() {
     const surnameMapImg = document.querySelector('.surnameMap');
 
     this.init = function() {
-        // this.getAllMapsPl(); // fetch URL, which returns XML data about all available images
+        this.getAllMapsPl(); // fetch URL, which returns XML data about all available images
         this.setupEventListeners();
         // surnameMapImg.src = defaultSurnameMapUrl; // alternative to HTML approach
     }
 
     this.getAllMapsPl = function() {
-        fetch(amazonUrl)
-            .then(function(response) {
-                console.log(response.xml());
-            })
-            .then(function(myXml) {
-                console.log(myXml);
-            });
+        // fetch(amazonUrl)
+        //     .then(function(response) {
+        //         console.log(response.xml());
+        //     })
+        //     .then(function(myXml) {
+        //         console.log(myXml);
+        //     });
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('GET', amazonUrl, false);
+        xmlhttp.send();
+        var xmlDoc = xmlhttp.responseXML;
+
+        console.log(xmlDoc);
     }
 
     this.setupEventListeners = function() {
         var eventHandler = () => {
-        // this.sendRequest(surnameInput.value); // Causes CORS, from localhost
+            // this.sendRequest(surnameInput.value); // Causes CORS, from localhost
             this.updateImg(surnameInput.value);
         };
 
@@ -61,9 +68,9 @@ function MoiKrewniRecovery() {
     this.parseSurnameValue = function(surnameValue) {
         // Alternative, if needed
         // for (let char of PL_chars){
-        // 	if (surnameValue.indexOf(char) > -1) {
-        // 		surnameValue = surnameValue.replace(char, PL_chars_map[char]);
-        // 	}
+        //  if (surnameValue.indexOf(char) > -1) {
+        //      surnameValue = surnameValue.replace(char, PL_chars_map[char]);
+        //  }
         // }
         // var finalSurnameValue = surnameValue;
 
