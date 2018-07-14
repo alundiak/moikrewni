@@ -22,7 +22,7 @@ function MoiKrewniRecovery() {
     const surnameMapImg = document.querySelector('.surnameMap');
 
     this.init = function() {
-        this.getAllMapsPl(); // fetch URL, which returns XML data about all available images
+        // this.getAllMapsPl(); // fetch URL, which returns XML data about all available images
         this.setupEventListeners();
         // surnameMapImg.src = defaultSurnameMapUrl; // alternative to HTML approach
     }
