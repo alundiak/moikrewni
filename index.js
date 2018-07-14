@@ -52,7 +52,7 @@ function Recovery() {
         // }
         // var finalSurnameValue = surnameValue;
 
-        var finalSurnameValue = escape(encodeURI(surnameValue));;
+        var finalSurnameValue = escape(encodeURI(surnameValue.toLowerCase()));;
         console.log(finalSurnameValue);
         return finalSurnameValue;
     }
@@ -70,7 +70,7 @@ function Recovery() {
         const surname = this.parseSurnameValue(surnameValueFromInput);
 
         const surnameValue = document.querySelector('.surnameValue');
-        surnameValue.innerText = surnameValueFromInput;
+        surnameValue.innerText = surnameValueFromInput.toLowerCase();
 
         const url = defaultSurnameMapUrl.replace(/kowalski/, surname);
 
