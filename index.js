@@ -1,5 +1,5 @@
 function Recovery() {
-	var defaultSurnameMapUrl = 'http://s3.amazonaws.com/12XN8SEM7ZEYVXRQQ702-maps-pl/kowalski_kompletny.png';
+    var defaultSurnameMapUrl = 'http://s3.amazonaws.com/12XN8SEM7ZEYVXRQQ702-maps-pl/kowalski_kompletny.png';
     const PL = {
         'ś': '%25C5%259B',
         'ń': '%25C5%2584',
@@ -12,12 +12,12 @@ function Recovery() {
         'ą': '%25C4%2585'
     };
 
-	const surnameMapImg = document.querySelector('.surnameMap');
+    const surnameMapImg = document.querySelector('.surnameMap');
 
     this.init = function() {
         // tbd
         this.setupEventListeners();
-		// surnameMapImg.src = defaultSurnameMapUrl;
+        // surnameMapImg.src = defaultSurnameMapUrl;
     }
 
     this.setupEventListeners = function() {
@@ -27,10 +27,18 @@ function Recovery() {
         // });
 
         let findSurnameEl = document.querySelector('.findSurname');
-        findSurnameEl.addEventListener('click', (e) => {
+        var eventHandler = () => {
             console.log(surnameEl.value);
             // this.sendRequest(surname.value);
             this.updateImg(surnameEl.value);
+        };
+
+        findSurnameEl.addEventListener('click', eventHandler);
+        surnameEl.addEventListener('keyup', (e) => {
+            e.which = e.which || e.keyCode;
+            if (e.which == 13) {
+                eventHandler();
+            }
         });
     }
 
@@ -42,7 +50,7 @@ function Recovery() {
 
     this.sendRequest = function(surnameValueFromInput) {
         const surname = this.parseSurnameValue(surnameValueFromInput);
-    	const url = defaultSurnameMapUrl.replace(/kowalski/, surname);
+        const url = defaultSurnameMapUrl.replace(/kowalski/, surname);
 
         fetch(url).then(function(a, b) {
             console.log(a, b);
@@ -51,17 +59,17 @@ function Recovery() {
 
     this.updateImg = function(surnameValueFromInput) {
         const surname = this.parseSurnameValue(surnameValueFromInput);
-        
+
         const surnameValue = document.querySelector('.surnameValue');
         surnameValue.innerText = surname;
 
-		const url = defaultSurnameMapUrl.replace(/kowalski/, surname);
-		
-		const surnameMapUrlValue = document.querySelector('.surnameMapUrlValue');
+        const url = defaultSurnameMapUrl.replace(/kowalski/, surname);
+
+        const surnameMapUrlValue = document.querySelector('.surnameMapUrlValue');
         surnameMapUrlValue.innerText = url;
 
-    	surnameMapImg.src = url;
-    }    
+        surnameMapImg.src = url;
+    }
 }
 
 var recovery = new Recovery();
