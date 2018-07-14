@@ -24,7 +24,7 @@ function Recovery() {
 
     this.setupEventListeners = function() {
         var eventHandler = () => {
-            this.sendRequest(surnameInput.value);
+            // this.sendRequest(surnameInput.value);
             this.updateImg(surnameInput.value);
         };
 
@@ -53,7 +53,6 @@ function Recovery() {
         // var finalSurnameValue = surnameValue;
 
         var finalSurnameValue = escape(encodeURI(surnameValue.toLowerCase()));;
-        console.log(finalSurnameValue);
         return finalSurnameValue;
     }
 
