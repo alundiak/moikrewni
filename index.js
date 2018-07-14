@@ -21,12 +21,6 @@ function MoiKrewniRecovery() {
     const findSurnameButton = document.querySelector('.findSurname');
     const surnameMapImg = document.querySelector('.surnameMap');
 
-    this.init = function() {
-        // this.getAllMapsPl(); // fetch URL, which returns XML data about all available images
-        this.setupEventListeners();
-        // surnameMapImg.src = defaultSurnameMapUrl; // alternative to HTML approach
-    }
-
     this.getAllMapsPl = function() {
         // fetch(amazonUrl)
         //     .then(function(response) {
@@ -47,7 +41,7 @@ function MoiKrewniRecovery() {
     this.setupEventListeners = function() {
         var eventHandler = () => {
             // this.sendRequest(surnameInput.value); // Causes CORS, from localhost
-            this.updateImg(surnameInput.value);
+            this.updateImgTag(surnameInput.value);
         };
 
         findSurnameButton.addEventListener('click', eventHandler);
@@ -87,18 +81,26 @@ function MoiKrewniRecovery() {
         });
     }
 
-    this.updateImg = function(surnameValueFromInput) {
-        const surname = this.parseSurnameValue(surnameValueFromInput);
-
+    this.updateImageInfo = function(surnameValueFromInput, url) {
         const surnameValue = document.querySelector('.surnameValue');
         surnameValue.innerText = surnameValueFromInput.toLowerCase();
 
-        const url = defaultSurnameMapUrl.replace(/kowalski/, surname);
-
         const surnameMapUrlValue = document.querySelector('.surnameMapUrlValue');
         surnameMapUrlValue.innerText = url;
+    }
 
+    this.updateImgTag = function(surnameValueFromInput) {
+        const surname = this.parseSurnameValue(surnameValueFromInput);
+        const url = defaultSurnameMapUrl.replace(/kowalski/, surname);
+        this.updateImageInfo(surname, url);
         surnameMapImg.src = url;
+    }
+
+    this.init = function() {
+        // this.getAllMapsPl(); // fetch URL, which returns XML data about all available images
+        this.setupEventListeners();
+        // surnameMapImg.src = defaultSurnameMapUrl; // alternative to HTML approach
+        this.updateImageInfo(surnameInput.value, defaultSurnameMapUrl);
     }
 }
 
