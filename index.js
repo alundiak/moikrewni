@@ -51,7 +51,15 @@ function Recovery() {
 
     this.updateImg = function(surnameValueFromInput) {
         const surname = this.parseSurnameValue(surnameValueFromInput);
+        
+        const surnameValue = document.querySelector('.surnameValue');
+        surnameValue.innerText = surname;
+
 		const url = defaultSurnameMapUrl.replace(/kowalski/, surname);
+		
+		const surnameMapUrlValue = document.querySelector('.surnameMapUrlValue');
+        surnameMapUrlValue.innerText = url;
+
     	surnameMapImg.src = url;
     }    
 }

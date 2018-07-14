@@ -1,0 +1,8 @@
+.imgContainer, 
+.infoContainer {
+	display: inline-block;
+}
+
+.infoContainer {
+    vertical-align: top;
+}
