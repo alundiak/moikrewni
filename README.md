@@ -1,4 +1,4 @@
-Moikrewni.PL - Alternative Search with result of Surname Map as Image.
+moikrewni.PL - Alternative Search with result of Surname Map as Image.
 ===
 Built using access to Amazon images, which might be offline soon.
 
