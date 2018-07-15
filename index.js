@@ -110,6 +110,10 @@ function MoiKrewniRecovery() {
             const url = defaultSurnameMapUrl.replace(/kowalski/, surname);
             this.updateImgTag(url);
             this.updateImageInfo(surnameInput.value, url);
+
+            if (typeof this.customCallback === 'function') {
+                this.customCallback(surnameInput.value);
+            }
         };
 
         findSurnameButton.addEventListener('click', eventHandler);
@@ -165,16 +169,47 @@ function MoiKrewniRecovery() {
         surnameMapUrlValue.innerText = url;
     }
 
-    this.init = function() {
+    this.init = function(options) {
         // fetches URL, which returns XML data about all available images. But doesn't work due to CORS
         // this.getAllMapsPlRequest();
+
+        if (options && options.customCallback) {
+            this.customCallback = options.customCallback;
+        }
+
+        this.surnameInputValue = surnameInput.value; // fallback to use
 
         this.setupEventListeners();
 
         // surnameMapImg.src = defaultSurnameMapUrl; // alternative to HTML approach
         this.updateImageInfo(surnameInput.value, defaultSurnameMapUrl);
+
+        return surnameInput.value; // raw value from input
     }
 }
 
-var moikrewni = new MoiKrewniRecovery();
-moikrewni.init();
+function NazwiskaPolskie() {
+    const url = 'https://nazwiska-polskie.pl/';
+    const iframeEl = document.querySelector('.nazwiska-polskie');
+
+    this.setIframeSrc = function(urlEnding) {
+        iframeEl.src = url + urlEnding;
+    }
+}
+
+var nazwiskaPolskieInstance = new NazwiskaPolskie();
+var moiKrewniInstance = new MoiKrewniRecovery();
+
+var typedSurnameValue = moiKrewniInstance.init({
+    // Providing this callback, it will use surname for re-placing src value for IFRAME, but it works very slow.
+    customCallback(parsedSurnameValue) {
+        // nazwiskaPolskieInstance.setIframeSrc(moiKrewniInstance.parseSurnameValue(typedSurnameValue));
+        // nazwiskaPolskieInstance.setIframeSrc(parsedSurnameValue);
+    }
+});
+
+const reloadIframeBtn = document.querySelector('.reload-iframe');
+reloadIframeBtn.onclick = function() {
+    let parsedSurnameValue = moiKrewniInstance.parseSurnameValue(typedSurnameValue);
+    nazwiskaPolskieInstance.setIframeSrc(parsedSurnameValue);
+}
