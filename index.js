@@ -20,12 +20,12 @@ function MoiKrewniRecovery() {
     const surnameInput = document.querySelector('.surname');
     const findSurnameButton = document.querySelector('.findSurname');
     const surnameMapImg = document.querySelector('.surnameMap');
+    const requestInfo = document.querySelector('.request-info');
 
     this.getAllMapsPlRequest = function() {
         // doesn't work, due to CORS
-        // 
         var myHeaders = new Headers({
-            "Content-Type": "application/xml"
+            'Content-Type': 'application/xml'
         });
 
         var myInit = {
@@ -47,9 +47,9 @@ function MoiKrewniRecovery() {
                 console.log(myXml);
             })
             .catch((error) => {
-                //no XML content yet
+                // no XML content yet
                 console.log('There has been a problem with your fetch operation: ', error.message);
-            });;
+            });
 
         // const xmlhttp = new XMLHttpRequest();
         // xmlhttp.open('GET', amazonUrl, false);
@@ -70,8 +70,9 @@ function MoiKrewniRecovery() {
                 // doesn't go into this
                 const objectURL = URL.createObjectURL(myBlob);
                 this.updateImgTag(objectURL);
-            }).catch((error) => {
-                //even if png file fetched, in Network tab, it's still error here.
+            })
+            .catch((error) => {
+                // even if png file fetched, in Network tab, it's still error here.
                 console.log('There has been a problem with your fetch operation: ', error.message);
             });
     }
@@ -89,13 +90,15 @@ function MoiKrewniRecovery() {
 
         var myRequest = new Request(defaultSurnameMapUrl, myInit);
 
-        fetch(myRequest).then(function(response) {
-            return response.blob();
-        }).then((myBlob) => {
-            var objectURL = URL.createObjectURL(myBlob);
-            console.log(objectURL);
-            this.updateImgTag(objectURL);
-        });
+        fetch(myRequest)
+            .then(function(response) {
+                return response.blob();
+            })
+            .then((myBlob) => {
+                var objectURL = URL.createObjectURL(myBlob);
+                console.log(objectURL);
+                this.updateImgTag(objectURL);
+            });
     }
 
     this.setupEventListeners = function() {
@@ -106,7 +109,7 @@ function MoiKrewniRecovery() {
             const surname = this.parseSurnameValue(surnameInput.value);
             const url = defaultSurnameMapUrl.replace(/kowalski/, surname);
             this.updateImgTag(url);
-            this.updateImageInfo(surname, url);
+            this.updateImageInfo(surnameInput.value, url);
         };
 
         findSurnameButton.addEventListener('click', eventHandler);
@@ -139,9 +142,18 @@ function MoiKrewniRecovery() {
 
     this.updateImgTag = function(url) {
         surnameMapImg.src = url;
-        surnameMapImg.onload = function() {
+        surnameMapImg.onload = () => {
             findSurnameButton.classList.remove('is-loading');
-        }
+            requestInfo.innerText = '';
+            requestInfo.classList.remove('tag');
+            requestInfo.classList.remove('is-warning');
+        };
+        surnameMapImg.onerror = () => {
+            findSurnameButton.classList.remove('is-loading');
+            requestInfo.innerText = 'No such image';
+            requestInfo.classList.add('tag');
+            requestInfo.classList.add('is-warning');
+        };
     }
 
     this.updateImageInfo = function(surnameValueFromInput, url) {
