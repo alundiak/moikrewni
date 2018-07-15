@@ -100,6 +100,7 @@ function MoiKrewniRecovery() {
 
     this.setupEventListeners = function() {
         var eventHandler = () => {
+            findSurnameButton.classList.add('is-loading');
             // this.getImageRequest(surnameInput.value); // Causes CORS, from localhost
             // this.getImageRequest_2(surnameInput.value); // Causes CORS, from localhost
             const surname = this.parseSurnameValue(surnameInput.value);
@@ -138,6 +139,9 @@ function MoiKrewniRecovery() {
 
     this.updateImgTag = function(url) {
         surnameMapImg.src = url;
+        surnameMapImg.onload = function() {
+            findSurnameButton.classList.remove('is-loading');
+        }
     }
 
     this.updateImageInfo = function(surnameValueFromInput, url) {
@@ -145,6 +149,7 @@ function MoiKrewniRecovery() {
         surnameValue.innerText = surnameValueFromInput.toLowerCase();
 
         const surnameMapUrlValue = document.querySelector('.surnameMapUrlValue');
+        surnameMapUrlValue.href = url;
         surnameMapUrlValue.innerText = url;
     }
 

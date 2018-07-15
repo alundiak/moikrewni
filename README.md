@@ -56,6 +56,13 @@ If URL retrieved by simple GET request using Browser address bar, it shows some 
 </ListBucketResult>
 ```
 
+## Technologies
+
+- JavaScript, HTML, CSS
+- [Bulma](https://bulma.io/)
+- NodeJS / npm / http-server (localy)
+
+
 Author
 Andrii Lundiak
 
