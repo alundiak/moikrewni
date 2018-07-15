@@ -23,13 +23,33 @@ function MoiKrewniRecovery() {
 
     this.getAllMapsPlRequest = function() {
         // doesn't work, due to CORS
-        fetch(amazonUrl)
+        // 
+        var myHeaders = new Headers({
+            "Content-Type": "application/xml"
+        });
+
+        var myInit = {
+            method: 'GET',
+            headers: myHeaders,
+            mode: 'cors', // => 403
+            // mode: 'no-cors', // => 200
+            cache: 'default'
+        };
+
+        var myRequest = new Request(amazonUrl, myInit);
+
+        // fetch(amazonUrl)
+        fetch(myRequest)
             .then(function(response) {
                 return response.text();
             })
             .then(function(myXml) {
                 console.log(myXml);
-            });
+            })
+            .catch((error) => {
+                //no XML content yet
+                console.log('There has been a problem with your fetch operation: ', error.message);
+            });;
 
         // const xmlhttp = new XMLHttpRequest();
         // xmlhttp.open('GET', amazonUrl, false);
@@ -46,14 +66,42 @@ function MoiKrewniRecovery() {
             .then(function(response) {
                 return response.blob();
             })
-            .then(function(myBlob) {
-                console.log(myBlob);
+            .then((myBlob) => {
+                // doesn't go into this
+                const objectURL = URL.createObjectURL(myBlob);
+                this.updateImgTag(objectURL);
+            }).catch((error) => {
+                //even if png file fetched, in Network tab, it's still error here.
+                console.log('There has been a problem with your fetch operation: ', error.message);
             });
+    }
+
+    this.getImageRequest_2 = function() {
+        var myHeaders = new Headers();
+
+        var myInit = {
+            method: 'GET',
+            headers: myHeaders,
+            mode: 'cors',
+            // mode: 'no-cors',
+            cache: 'default'
+        };
+
+        var myRequest = new Request(defaultSurnameMapUrl, myInit);
+
+        fetch(myRequest).then(function(response) {
+            return response.blob();
+        }).then((myBlob) => {
+            var objectURL = URL.createObjectURL(myBlob);
+            console.log(objectURL);
+            this.updateImgTag(objectURL);
+        });
     }
 
     this.setupEventListeners = function() {
         var eventHandler = () => {
             // this.getImageRequest(surnameInput.value); // Causes CORS, from localhost
+            // this.getImageRequest_2(surnameInput.value); // Causes CORS, from localhost
             const surname = this.parseSurnameValue(surnameInput.value);
             const url = defaultSurnameMapUrl.replace(/kowalski/, surname);
             this.updateImgTag(url);
