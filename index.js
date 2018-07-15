@@ -44,16 +44,16 @@ function MoiKrewniRecovery() {
 
         fetch(url)
             .then(function(response) {
-                return response.json();
+                return response.blob();
             })
-            .then(function(myJson) {
-                console.log(myJson);
+            .then(function(myBlob) {
+                console.log(myBlob);
             });
     }
 
     this.setupEventListeners = function() {
         var eventHandler = () => {
-            this.getImageRequest(surnameInput.value); // Causes CORS, from localhost
+            // this.getImageRequest(surnameInput.value); // Causes CORS, from localhost
             const surname = this.parseSurnameValue(surnameInput.value);
             const url = defaultSurnameMapUrl.replace(/kowalski/, surname);
             this.updateImgTag(url);
