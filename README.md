@@ -63,8 +63,16 @@ If URL retrieved by simple GET request using Browser address bar, it shows some 
 - NodeJS / npm / http-server (localy)
 
 
-Author
+## Other similar services
+
+- https://nazwiska-polskie.pl/
+- http://genpol.com/module-Mapa.htm
+- [Lista nazwisk polskich - Google spradsheet](https://docs.google.com/spreadsheets/d/1-R-uxPEnOJaQBTbp08JXawA5SuJCpBBQ9NfaxgYMMV4/edit#gid=0). Można spróbować "convert XLS to JSON" a potem genrować mapy z moikrewni.pl.
+
+## Author
+
 Andrii Lundiak
 
-License 
+## License 
+
 Free
